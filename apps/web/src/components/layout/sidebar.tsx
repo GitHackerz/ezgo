@@ -3,67 +3,64 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Bus, Users, Settings, Map, BarChart3 } from "lucide-react";
+import {
+    LayoutDashboard,
+    Map,
+    Bus,
+    Route,
+    Calendar,
+    Ticket,
+    Users,
+    BarChart3,
+    Settings,
+} from "lucide-react";
 
-const sidebarItems = [
-  {
-    title: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Live Map",
-    href: "/dashboard/map",
-    icon: Map,
-  },
-  {
-    title: "Fleet Management",
-    href: "/dashboard/fleet",
-    icon: Bus,
-  },
-  {
-    title: "Users & Drivers",
-    href: "/dashboard/users",
-    icon: Users,
-  },
-  {
-    title: "Analytics",
-    href: "/dashboard/analytics",
-    icon: BarChart3,
-  },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
+const navigation = [
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Live Map", href: "/dashboard/map", icon: Map },
+  { name: "Fleet", href: "/dashboard/fleet", icon: Bus },
+  { name: "Routes", href: "/dashboard/routes", icon: Route },
+  { name: "Trips", href: "/dashboard/trips", icon: Calendar },
+  { name: "Bookings", href: "/dashboard/bookings", icon: Ticket },
+  { name: "Users & Drivers", href: "/dashboard/users", icon: Users },
+  { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+  { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="pb-12 w-64 border-r min-h-screen hidden md:block">
-      <div className="space-y-4 py-4">
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            EZGO Admin
-          </h2>
-          <div className="space-y-1">
-            {sidebarItems.map((item) => (
-              <Button
-                key={item.href}
-                variant={pathname === item.href ? "secondary" : "ghost"}
-                className={cn("w-full justify-start", pathname === item.href && "bg-secondary")}
-                asChild
-              >
-                <Link href={item.href}>
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {item.title}
-                </Link>
-              </Button>
-            ))}
-          </div>
+    <div className="flex h-full w-64 flex-col border-r bg-background">
+      <div className="flex h-16 items-center border-b px-6">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <Bus className="h-6 w-6" />
+          <span className="text-xl font-bold">EZGO</span>
+        </Link>
+      </div>
+      <nav className="flex-1 space-y-1 p-4">
+        {navigation.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
+              <item.icon className="h-5 w-5" />
+              {item.name}
+            </Link>
+          );
+        })}
+      </nav>
+      <div className="border-t p-4">
+        <div className="text-xs text-muted-foreground">
+          © 2025 EZGO. All rights reserved.
         </div>
       </div>
     </div>

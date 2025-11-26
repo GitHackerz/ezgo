@@ -10,9 +10,11 @@ import { TripModule } from './trip/trip.module';
 import { BookingModule } from './booking/booking.module';
 import { PaymentModule } from './payment/payment.module';
 import { RatingModule } from './rating/rating.module';
+import { WebsocketModule } from './websocket/websocket.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, UserModule, BusModule, RouteModule, TripModule, BookingModule, PaymentModule, RatingModule],
+  imports: [PrismaModule, AuthModule, UserModule, BusModule, RouteModule, TripModule, BookingModule, PaymentModule, RatingModule, WebsocketModule, NotificationModule],
   controllers: [AppController],
   providers: [AppService],
 })

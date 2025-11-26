@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "prisma.prisma",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "expo.vscode-expo-tools"
+  ]
+}

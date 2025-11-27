@@ -1,21 +1,22 @@
 {
-  "name": "ezgo-monorepo",
-  "version": "1.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "biome format . --write",
-    "check": "biome check ."
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "type": "commonjs"
+	"name": "ezgo-monorepo",
+	"version": "1.0.0",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*",
+		"landing"
+	],
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"lint": "turbo lint",
+		"format": "biome format . --write",
+		"check": "biome check ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"type": "commonjs"
 }

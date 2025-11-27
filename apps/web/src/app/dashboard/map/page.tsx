@@ -1,9 +1,9 @@
 "use client";
 
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import dynamic from "next/dynamic";
+import { useState } from "react";
 
-const MapContent = dynamic(() => import('./MapContent'), { ssr: false });
+const MapContent = dynamic(() => import("./MapContent"), { ssr: false });
 
 export default function LiveMapPage() {
 	const [buses, _setBuses] = useState([

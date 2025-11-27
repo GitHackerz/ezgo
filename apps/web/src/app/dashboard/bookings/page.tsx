@@ -1,5 +1,3 @@
-"use client";
-
 import { getBookings } from "@/actions/bookings";
 import { BookingsClient } from "./bookings-client";
 

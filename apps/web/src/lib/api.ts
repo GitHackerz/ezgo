@@ -8,7 +8,7 @@ const SERVER_URL = process.env.SERVER_URL || "http://localhost:3001";
 
 async function getAuthToken() {
 	const session = await getServerSession(authOptions);
-	return session?.token;
+	return session?.user?.accessToken;
 }
 
 export async function handleRequest<T>(

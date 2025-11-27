@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: #2563eb; color: white; padding: 20px; text-align: center; }
+    .content { background: #f9fafb; padding: 30px; }
+    .button { display: inline-block; padding: 12px 24px; background: #2563eb; color: white; text-decoration: none; border-radius: 6px; }
+    .footer { text-align: center; padding: 20px; color: #6b7280; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚌 EZGO</h1>
+    </div>
+    <div class="content">
+      <h2>Booking Confirmed!</h2>
+      <p>Hi {{name}},</p>
+      <p>Your booking has been confirmed. Here are your trip details:</p>
+      <ul>
+        <li><strong>Route:</strong> {{route}}</li>
+        <li><strong>Date:</strong> {{date}}</li>
+        <li><strong>Seat:</strong> {{seat}}</li>
+      </ul>
+      <p><strong>QR Code:</strong> {{qrCode}}</p>
+      <p>Please show this QR code to the driver when boarding.</p>
+      <p style="text-align: center; margin-top: 30px;">
+        <a href="#" class="button">View Ticket</a>
+      </p>
+    </div>
+    <div class="footer">
+      <p>© 2025 EZGO. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

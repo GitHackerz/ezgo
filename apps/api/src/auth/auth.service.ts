@@ -1,12 +1,12 @@
 import {
+	ConflictException,
 	Injectable,
 	UnauthorizedException,
-	ConflictException,
 } from "@nestjs/common";
-import type { JwtService } from "@nestjs/jwt";
+import { JwtService } from "@nestjs/jwt";
 import { Role } from "@prisma/client";
 import * as bcrypt from "bcrypt";
-import type { PrismaService } from "../prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import type { LoginDto, RegisterDto } from "./dto/auth.dto";
 
 @Injectable()

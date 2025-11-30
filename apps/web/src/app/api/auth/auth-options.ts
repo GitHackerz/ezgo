@@ -2,18 +2,30 @@ import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const SERVER_URL = process.env.SERVER_URL || "http://localhost:3001";
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:4050";
+
+function decodeJWT(token: string) {
+	try {
+		const payload = JSON.parse(atob(token.split('.')[1]));
+		return payload;
+	} catch {
+		return null;
+	}
+}
 
 export const authOptions: NextAuthOptions = {
 	providers: [
 		CredentialsProvider({
-			name: "Credentials",
+			id: "credentials",
+			name: "credentials",
 			credentials: {
 				email: { label: "Email", type: "email" },
 				password: { label: "Password", type: "password" },
 			},
 			async authorize(credentials) {
-				if (!credentials?.email || !credentials?.password) return null;
+				if (!credentials?.email || !credentials?.password) {
+					throw new Error("Email and password are required");
+				}
 
 				try {
 					const response = await axios.post(`${SERVER_URL}/auth/login`, {
@@ -34,10 +46,12 @@ export const authOptions: NextAuthOptions = {
 							refreshToken: user.refreshToken,
 						};
 					}
-					return null;
-				} catch (error) {
-					console.error("Login failed:", error);
-					return null;
+					throw new Error("Invalid response from server");
+				} catch (error: any) {
+					// Throw the backend error message
+					const message =
+						error.response?.data?.message || error.message || "Login failed";
+					throw new Error(message);
 				}
 			},
 		}),
@@ -50,6 +64,16 @@ export const authOptions: NextAuthOptions = {
 				token.accessToken = user.accessToken;
 				token.refreshToken = user.refreshToken;
 			}
+
+			// Verify the access token
+			if (token.accessToken) {
+				const payload = decodeJWT(token.accessToken);
+				if (!payload || payload.exp * 1000 < Date.now()) {
+					// Token is invalid or expired, sign out by returning null
+					return null;
+				}
+			}
+
 			return token;
 		},
 		async session({ session, token }: any) {

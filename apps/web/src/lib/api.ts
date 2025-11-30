@@ -4,7 +4,7 @@ import axios, { type AxiosRequestConfig } from "axios";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/auth-options";
 
-const SERVER_URL = process.env.SERVER_URL || "http://localhost:3001";
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:4050";
 
 async function getAuthToken() {
 	const session = await getServerSession(authOptions);
@@ -14,9 +14,11 @@ async function getAuthToken() {
 export async function handleRequest<T>(
 	method: "get" | "post" | "patch" | "put" | "delete",
 	urlPath: string,
-	data?: any,
+	data?: unknown,
 	withToken: boolean = true,
-): Promise<{ data?: T; error?: any }> {
+): Promise<{ success: boolean; data?: T; error?: string; status?: number }> {
+	console.log(`${SERVER_URL}/${urlPath}`);
+
 	const config: AxiosRequestConfig = {
 		method,
 		url: `${SERVER_URL}/${urlPath}`,
@@ -30,34 +32,42 @@ export async function handleRequest<T>(
 	if (withToken) {
 		const token = await getAuthToken();
 		if (!token) {
-			// If no token available, don't add Authorization header
-			// This prevents sending malformed Bearer tokens
 			return {
-				error: {
-					status: 401,
-					message: "No authentication token available",
-				},
+				success: false,
+				error: "No authentication token available",
 			};
 		}
-		// Merge Authorization into existing headers
 		config.headers = {
 			...config.headers,
 			Authorization: `Bearer ${token}`,
 		};
 	}
 
-	// Note: For FormData, axios automatically sets Content-Type with boundary
-	// Don't manually set it as it will break file uploads
-
 	try {
 		const response = await axios(config);
 
-		return { data: response.data };
-	} catch (error: any) {
+		return { success: true, data: response.data };
+	} catch (error) {
+		const err = error as {
+			response?: { status?: number; data?: unknown };
+			message?: string;
+		};
+		// Include HTTP status and response body when available to help debugging 401/403 issues
 		console.error(
-			`API Error [${method} ${urlPath}]:`,
-			error.response?.data || error.message,
+			`API Error [${method} ${urlPath}] status=${err.response?.status || "?"}:`,
+			err.response?.data || err.message,
 		);
-		return { error: error.response?.data ?? "An error occurred" };
+		// Prefer structured message from response, fall back to error.message or stringified error
+		const respData = err.response?.data as { message?: string } | undefined;
+		const fallbackMessage =
+			typeof err === "object"
+				? (err as { message?: string }).message
+				: String(err);
+		return {
+			success: false,
+			error: respData?.message || fallbackMessage || "An error occurred",
+			// expose status for callers that may want to handle 401/403 specially
+			status: err.response?.status,
+		};
 	}
 }

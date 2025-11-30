@@ -1,21 +1,49 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PrismaModule } from './prisma/prisma.module';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { BusModule } from './bus/bus.module';
-import { RouteModule } from './route/route.module';
-import { TripModule } from './trip/trip.module';
-import { BookingModule } from './booking/booking.module';
-import { PaymentModule } from './payment/payment.module';
-import { RatingModule } from './rating/rating.module';
-import { WebsocketModule } from './websocket/websocket.module';
-import { NotificationModule } from './notification/notification.module';
+import { Module } from "@nestjs/common";
+import { APP_INTERCEPTOR } from "@nestjs/core";
+import { AnalyticsModule } from "./analytics/analytics.module";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { AuthModule } from "./auth/auth.module";
+import { BookingModule } from "./booking/booking.module";
+import { BusModule } from "./bus/bus.module";
+import { LoggingInterceptor } from "./common/logging/logging.interceptor";
+import { LoggingModule } from "./common/logging/logging.module";
+import { CompanyModule } from "./company/company.module";
+import { LocationModule } from "./location/location.module";
+import { NotificationModule } from "./notification/notification.module";
+import { PaymentModule } from "./payment/payment.module";
+import { PrismaModule } from "./prisma/prisma.module";
+import { RatingModule } from "./rating/rating.module";
+import { RouteModule } from "./route/route.module";
+import { TripModule } from "./trip/trip.module";
+import { UserModule } from "./user/user.module";
+import { WebsocketModule } from "./websocket/websocket.module";
 
 @Module({
-  imports: [PrismaModule, AuthModule, UserModule, BusModule, RouteModule, TripModule, BookingModule, PaymentModule, RatingModule, WebsocketModule, NotificationModule],
-  controllers: [AppController],
-  providers: [AppService],
+	imports: [
+		PrismaModule,
+		AuthModule,
+		UserModule,
+		BusModule,
+		CompanyModule,
+		LocationModule,
+		RouteModule,
+		TripModule,
+		BookingModule,
+		PaymentModule,
+		RatingModule,
+		WebsocketModule,
+		NotificationModule,
+		AnalyticsModule,
+		LoggingModule,
+	],
+	controllers: [AppController],
+	providers: [
+		AppService,
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: LoggingInterceptor,
+		},
+	],
 })
 export class AppModule {}

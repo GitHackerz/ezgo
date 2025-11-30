@@ -50,30 +50,52 @@ enum NotificationType {
   SYSTEM_ANNOUNCEMENT
 }
 
+enum TripType {
+  REGULAR
+  SPECIAL
+}
+
+model Location {
+  id          String   @id @default(uuid())
+  name        String
+  city        String
+  governorate String
+  address     String?
+  latitude    Float
+  longitude   Float
+  type        String   @default("CITY") // CITY, STATION, LANDMARK
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  routesAsOrigin      Route[] @relation("OriginLocation")
+  routesAsDestination Route[] @relation("DestinationLocation")
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  firstName String
-  lastName  String
-  phone     String?
-  avatar    String?
-  role      Role     @default(PASSENGER)
-  isVerified Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  firstName  String
+  lastName   String
+  phone      String?
+  avatar     String?
+  role       Role     @default(PASSENGER)
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id])
-  
-  driverTrips   Trip[]        @relation("DriverTrips")
-  bookings      Booking[]
-  ratings       Rating[]
-  favorites     Favorite[]
-  notifications Notification[]
-  sentMessages  Message[]     @relation("SentMessages")
-  receivedMessages Message[]  @relation("ReceivedMessages")
-  payments      Payment[]
+
+  driverTrips      Trip[]         @relation("DriverTrips")
+  bookings         Booking[]
+  ratings          Rating[]
+  favorites        Favorite[]
+  notifications    Notification[]
+  sentMessages     Message[]      @relation("SentMessages")
+  receivedMessages Message[]      @relation("ReceivedMessages")
+  payments         Payment[]
 }
 
 model Company {
@@ -86,22 +108,22 @@ model Company {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  users     User[]
-  buses     Bus[]
-  routes    Route[]
+  users  User[]
+  buses  Bus[]
+  routes Route[]
 }
 
 model Bus {
-  id          String     @id @default(uuid())
-  plateNumber String     @unique
+  id          String    @id @default(uuid())
+  plateNumber String    @unique
   capacity    Int
   model       String?
   year        Int?
-  status      BusStatus  @default(ACTIVE)
+  status      BusStatus @default(ACTIVE)
   latitude    Float?
   longitude   Float?
   lastUpdated DateTime?
-  
+
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
@@ -111,15 +133,20 @@ model Bus {
 }
 
 model Route {
-  id          String   @id @default(uuid())
-  name        String
-  origin      String
-  destination String
-  distance    Float?
-  duration    Int?     // in minutes
-  stops       Json?    // Array of stops with {name, latitude, longitude, order}
-  isActive    Boolean  @default(true)
-  
+  id       String   @id @default(uuid())
+  name     String
+  distance Float?
+  duration Int? // in minutes
+  stops    Json? // Array of stops with {locationId, name, latitude, longitude, order}
+  isActive Boolean  @default(true)
+  tripType TripType @default(REGULAR)
+
+  originId String
+  origin   Location @relation("OriginLocation", fields: [originId], references: [id])
+
+  destinationId String
+  destination   Location @relation("DestinationLocation", fields: [destinationId], references: [id])
+
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
@@ -128,28 +155,28 @@ model Route {
 }
 
 model Trip {
-  id            String     @id @default(uuid())
-  departureTime DateTime
-  arrivalTime   DateTime?
+  id              String     @id @default(uuid())
+  departureTime   DateTime
+  arrivalTime     DateTime?
   actualDeparture DateTime?
   actualArrival   DateTime?
-  status        TripStatus @default(SCHEDULED)
-  price         Float
-  availableSeats Int
-  
-  routeId   String
-  route     Route   @relation(fields: [routeId], references: [id], onDelete: Cascade)
-  
-  busId     String
-  bus       Bus     @relation(fields: [busId], references: [id], onDelete: Cascade)
-  
-  driverId  String
-  driver    User    @relation("DriverTrips", fields: [driverId], references: [id])
+  status          TripStatus @default(SCHEDULED)
+  price           Float
+  availableSeats  Int
+
+  routeId String
+  route   Route  @relation(fields: [routeId], references: [id], onDelete: Cascade)
+
+  busId String
+  bus   Bus    @relation(fields: [busId], references: [id], onDelete: Cascade)
+
+  driverId String
+  driver   User   @relation("DriverTrips", fields: [driverId], references: [id])
 
   bookings  Booking[]
   ratings   Rating[]
   incidents Incident[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -159,15 +186,15 @@ model Booking {
   seatNumber String?
   status     BookingStatus @default(PENDING)
   qrCode     String?       @unique
-  
-  tripId    String
-  trip      Trip    @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  
-  userId    String
-  user      User    @relation(fields: [userId], references: [id])
-  
-  payment   Payment?
-  
+
+  tripId String
+  trip   Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  payment Payment?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -177,46 +204,46 @@ model Payment {
   amount        Float
   currency      String        @default("TND")
   status        PaymentStatus @default(PENDING)
-  paymentMethod String?       // card, cash, wallet
+  paymentMethod String? // card, cash, wallet
   transactionId String?       @unique
-  
+
   bookingId String  @unique
   booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  
-  userId    String
-  user      User    @relation(fields: [userId], references: [id])
-  
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Rating {
-  id      String @id @default(uuid())
-  rating  Int    // 1-5
+  id      String  @id @default(uuid())
+  rating  Int // 1-5
   comment String?
-  
-  tripId  String
-  trip    Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  
-  userId  String
-  user    User   @relation(fields: [userId], references: [id])
-  
+
+  tripId String
+  trip   Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
-  
+
   @@unique([tripId, userId])
 }
 
 model Favorite {
   id String @id @default(uuid())
-  
-  userId  String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   routeId String
   route   Route  @relation(fields: [routeId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
-  
+
   @@unique([userId, routeId])
 }
 
@@ -226,43 +253,43 @@ model Notification {
   message String
   type    NotificationType
   isRead  Boolean          @default(false)
-  data    Json?            // Additional data
-  
-  userId  String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  data    Json? // Additional data
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
 }
 
 model Maintenance {
-  id          String   @id @default(uuid())
-  description String
-  cost        Float?
+  id            String    @id @default(uuid())
+  description   String
+  cost          Float?
   scheduledDate DateTime
   completedDate DateTime?
-  status      String   @default("SCHEDULED") // SCHEDULED, IN_PROGRESS, COMPLETED
-  
+  status        String    @default("SCHEDULED") // SCHEDULED, IN_PROGRESS, COMPLETED
+
   busId String
   bus   Bus    @relation(fields: [busId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Incident {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String
-  severity    String   // LOW, MEDIUM, HIGH, CRITICAL
-  status      String   @default("REPORTED") // REPORTED, IN_PROGRESS, RESOLVED
+  severity    String // LOW, MEDIUM, HIGH, CRITICAL
+  status      String  @default("REPORTED") // REPORTED, IN_PROGRESS, RESOLVED
   location    String?
-  
+
   tripId String?
-  trip   Trip?  @relation(fields: [tripId], references: [id], onDelete: SetNull)
-  
-  busId  String?
-  bus    Bus?   @relation(fields: [busId], references: [id], onDelete: SetNull)
-  
+  trip   Trip?   @relation(fields: [tripId], references: [id], onDelete: SetNull)
+
+  busId String?
+  bus   Bus?    @relation(fields: [busId], references: [id], onDelete: SetNull)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -271,12 +298,12 @@ model Message {
   id      String  @id @default(uuid())
   content String
   isRead  Boolean @default(false)
-  
+
   senderId String
   sender   User   @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
-  
+
   receiverId String
   receiver   User   @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
 }

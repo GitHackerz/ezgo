@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import type { PrismaService } from "../prisma/prisma.service";
+import { BusStatus } from "@prisma/client";
+import { PrismaService } from "../prisma/prisma.service";
 import type {
 	CreateBusDto,
 	UpdateBusDto,
@@ -28,7 +29,45 @@ export class BusService {
 		return this.prisma.bus.findMany({
 			where: {
 				...(companyId && { companyId }),
-				...(status && { status: status as any }),
+				...(status && { status: status as BusStatus }),
+			},
+			include: {
+				company: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+				_count: {
+					select: {
+						trips: true,
+					},
+				},
+			},
+			orderBy: {
+				plateNumber: "asc",
+			},
+		});
+	}
+
+	async findNearby(lat: number, lon: number, radius: number = 5) {
+		// Find buses with location data within the radius (in km)
+		// Using a simple bounding box approach for filtering
+		const kmToDegree = 1 / 111; // Approximate conversion
+		const latDelta = radius * kmToDegree;
+		const lonDelta = radius * kmToDegree;
+
+		const buses = await this.prisma.bus.findMany({
+			where: {
+				status: BusStatus.ACTIVE,
+				latitude: {
+					gte: lat - latDelta,
+					lte: lat + latDelta,
+				},
+				longitude: {
+					gte: lon - lonDelta,
+					lte: lon + lonDelta,
+				},
 			},
 			include: {
 				company: {
@@ -38,10 +77,44 @@ export class BusService {
 					},
 				},
 			},
-			orderBy: {
-				plateNumber: "asc",
-			},
 		});
+
+		// Calculate actual distance and filter
+		return buses
+			.map((bus) => ({
+				...bus,
+				distance: this.calculateDistance(
+					lat,
+					lon,
+					bus.latitude ?? 0,
+					bus.longitude ?? 0,
+				),
+			}))
+			.filter((bus) => bus.distance <= radius)
+			.sort((a, b) => a.distance - b.distance);
+	}
+
+	private calculateDistance(
+		lat1: number,
+		lon1: number,
+		lat2: number,
+		lon2: number,
+	): number {
+		const R = 6371; // Earth's radius in km
+		const dLat = this.toRad(lat2 - lat1);
+		const dLon = this.toRad(lon2 - lon1);
+		const a =
+			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			Math.cos(this.toRad(lat1)) *
+				Math.cos(this.toRad(lat2)) *
+				Math.sin(dLon / 2) *
+				Math.sin(dLon / 2);
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return R * c;
+	}
+
+	private toRad(deg: number): number {
+		return deg * (Math.PI / 180);
 	}
 
 	async findOne(id: string) {
@@ -53,6 +126,17 @@ export class BusService {
 						id: true,
 						name: true,
 					},
+				},
+				trips: {
+					where: {
+						departureTime: {
+							gte: new Date(),
+						},
+					},
+					orderBy: {
+						departureTime: "asc",
+					},
+					take: 10,
 				},
 				maintenance: {
 					orderBy: {
@@ -96,34 +180,6 @@ export class BusService {
 				latitude: locationDto.latitude,
 				longitude: locationDto.longitude,
 				lastUpdated: new Date(),
-			},
-		});
-	}
-
-	async findNearby(latitude: number, longitude: number, radiusKm: number = 5) {
-		// Simple bounding box calculation (for production, use PostGIS or similar)
-		const latDelta = radiusKm / 111; // 1 degree latitude ≈ 111 km
-		const lonDelta = radiusKm / (111 * Math.cos((latitude * Math.PI) / 180));
-
-		return this.prisma.bus.findMany({
-			where: {
-				status: "ACTIVE",
-				latitude: {
-					gte: latitude - latDelta,
-					lte: latitude + latDelta,
-				},
-				longitude: {
-					gte: longitude - lonDelta,
-					lte: longitude + lonDelta,
-				},
-			},
-			include: {
-				company: {
-					select: {
-						id: true,
-						name: true,
-					},
-				},
 			},
 		});
 	}

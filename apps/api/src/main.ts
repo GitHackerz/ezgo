@@ -1,18 +1,45 @@
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger"; // Added SwaggerModule and DocumentBuilder
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import * as dotenv from "dotenv";
 import { AppModule } from "./app.module";
 
-async function bootstrap() {
-	const app = await NestFactory.create(AppModule); // Keep this line to define 'app'
+// Load environment variables
+dotenv.config({ path: ".env" });
 
-	const config = new DocumentBuilder() // Define 'config' for Swagger
-		.setTitle("API Documentation")
-		.setDescription("The API description")
+async function bootstrap() {
+	const app = await NestFactory.create(AppModule);
+
+	const config = new DocumentBuilder()
+		.setTitle("EzGo API")
+		.setDescription("Bus booking and management system API")
 		.setVersion("1.0")
-		.addTag("api")
+		.addBearerAuth()
+		.addTag("auth", "Authentication endpoints")
+		.addTag("users", "User management")
+		.addTag("companies", "Company management")
+		.addTag("buses", "Bus fleet management")
+		.addTag("routes", "Route management")
+		.addTag("trips", "Trip scheduling and management")
+		.addTag("bookings", "Booking management")
+		.addTag("payments", "Payment processing")
+		.addTag("ratings", "Rating and review system")
+		.addTag("notifications", "Notification system")
+		.addTag("analytics", "Analytics and reporting")
 		.build();
+
 	const document = SwaggerModule.createDocument(app, config);
 	SwaggerModule.setup("api/docs", app, document);
+
+	app.useGlobalPipes(
+		new ValidationPipe({
+			whitelist: true,
+			forbidNonWhitelisted: true,
+			transform: true,
+		}),
+	);
+
+	app.enableCors({ origin: "*" });
 
 	await app.listen(4050);
 	console.log("🚀 API running on http://localhost:4050");

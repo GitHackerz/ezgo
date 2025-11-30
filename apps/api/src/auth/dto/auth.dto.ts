@@ -1,34 +1,103 @@
-import { z } from 'zod';
-import { Role } from '@prisma/client';
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { Role } from "@prisma/client";
+import {
+	IsEmail,
+	IsEnum,
+	IsOptional,
+	IsString,
+	IsUUID,
+	MinLength,
+} from "class-validator";
 
-export const RegisterDtoSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
-  phone: z.string().optional(),
-  role: z.nativeEnum(Role).optional(),
-  companyId: z.string().uuid().optional(),
-});
+export class RegisterDto {
+	@ApiProperty({
+		example: "user@example.com",
+		description: "User email address",
+	})
+	@IsEmail()
+	email: string;
 
-export type RegisterDto = z.infer<typeof RegisterDtoSchema>;
+	@ApiProperty({
+		example: "Password123!",
+		description: "User password",
+		minLength: 8,
+	})
+	@IsString()
+	@MinLength(8)
+	password: string;
 
-export const LoginDtoSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
+	@ApiProperty({ example: "John", description: "User first name" })
+	@IsString()
+	@MinLength(2)
+	firstName: string;
 
-export type LoginDto = z.infer<typeof LoginDtoSchema>;
+	@ApiProperty({ example: "Doe", description: "User last name" })
+	@IsString()
+	@MinLength(2)
+	lastName: string;
 
-export const ForgotPasswordDtoSchema = z.object({
-  email: z.string().email(),
-});
+	@ApiPropertyOptional({
+		example: "+1234567890",
+		description: "User phone number",
+	})
+	@IsString()
+	@IsOptional()
+	phone?: string;
 
-export type ForgotPasswordDto = z.infer<typeof ForgotPasswordDtoSchema>;
+	@ApiPropertyOptional({
+		enum: Role,
+		description: "User role",
+		default: Role.PASSENGER,
+	})
+	@IsEnum(Role)
+	@IsOptional()
+	role?: Role;
 
-export const ResetPasswordDtoSchema = z.object({
-  token: z.string(),
-  password: z.string().min(8),
-});
+	@ApiPropertyOptional({
+		example: "123e4567-e89b-12d3-a456-426614174000",
+		description: "Company ID for company users",
+	})
+	@IsUUID()
+	@IsOptional()
+	companyId?: string;
+}
 
-export type ResetPasswordDto = z.infer<typeof ResetPasswordDtoSchema>;
+export class LoginDto {
+	@ApiProperty({
+		example: "user@example.com",
+		description: "User email address",
+	})
+	@IsEmail()
+	email: string;
+
+	@ApiProperty({ example: "Password123!", description: "User password" })
+	@IsString()
+	password: string;
+}
+
+export class ForgotPasswordDto {
+	@ApiProperty({
+		example: "user@example.com",
+		description: "User email address",
+	})
+	@IsEmail()
+	email: string;
+}
+
+export class ResetPasswordDto {
+	@ApiProperty({
+		example: "reset-token-here",
+		description: "Password reset token",
+	})
+	@IsString()
+	token: string;
+
+	@ApiProperty({
+		example: "NewPassword123!",
+		description: "New password",
+		minLength: 8,
+	})
+	@IsString()
+	@MinLength(8)
+	password: string;
+}

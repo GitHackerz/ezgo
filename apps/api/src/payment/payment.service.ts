@@ -1,10 +1,10 @@
 import {
+	BadRequestException,
 	Injectable,
 	NotFoundException,
-	BadRequestException,
 } from "@nestjs/common";
 import Stripe from "stripe";
-import type { PrismaService } from "../prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import type {
 	CreatePaymentDto,
 	CreatePaymentIntentDto,

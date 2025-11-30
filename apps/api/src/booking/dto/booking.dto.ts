@@ -1,15 +1,23 @@
-import { z } from 'zod';
-import { BookingStatus } from '@prisma/client';
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { BookingStatus } from "@prisma/client";
+import { IsEnum, IsOptional, IsString, IsUUID } from "class-validator";
 
-export const CreateBookingDtoSchema = z.object({
-  tripId: z.string().uuid(),
-  seatNumber: z.string().optional(),
-});
+export class CreateBookingDto {
+	@ApiProperty({
+		example: "123e4567-e89b-12d3-a456-426614174000",
+		description: "Trip ID",
+	})
+	@IsUUID()
+	tripId: string;
 
-export type CreateBookingDto = z.infer<typeof CreateBookingDtoSchema>;
+	@ApiPropertyOptional({ example: "A12", description: "Seat number" })
+	@IsString()
+	@IsOptional()
+	seatNumber?: string;
+}
 
-export const UpdateBookingDtoSchema = z.object({
-  status: z.nativeEnum(BookingStatus),
-});
-
-export type UpdateBookingDto = z.infer<typeof UpdateBookingDtoSchema>;
+export class UpdateBookingDto {
+	@ApiProperty({ enum: BookingStatus, description: "Booking status" })
+	@IsEnum(BookingStatus)
+	status: BookingStatus;
+}

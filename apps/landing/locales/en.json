@@ -1,0 +1,185 @@
+{
+	"nav": {
+		"features": "Features",
+		"routes": "Routes",
+		"download": "Download",
+		"signIn": "Sign In"
+	},
+	"hero": {
+		"title": "Travel Smart Across",
+		"titleHighlight": "Tunisia",
+		"subtitle": "Book bus tickets online, track your bus in real-time, and enjoy a seamless travel experience.",
+		"getStarted": "Get Started Free",
+		"learnMore": "Learn More",
+		"stats": {
+			"travelers": "Happy Travelers",
+			"routes": "Routes",
+			"rating": "Rating"
+		},
+		"features": {
+			"tracking": {
+				"title": "Real-Time Tracking",
+				"description": "Know exactly where your bus is"
+			},
+			"payments": {
+				"title": "Secure Payments",
+				"description": "Multiple payment options"
+			}
+		}
+	},
+	"features": {
+		"title": "Why Choose EZGO?",
+		"subtitle": "Everything you need for a perfect journey",
+		"items": {
+			"booking": {
+				"title": "Easy Booking",
+				"description": "Book your bus tickets in seconds with our intuitive mobile and web apps."
+			},
+			"tracking": {
+				"title": "Real-Time Tracking",
+				"description": "Track your bus location in real-time and never miss your ride."
+			},
+			"payments": {
+				"title": "Secure Payments",
+				"description": "Pay safely with multiple payment options including cards and mobile wallets."
+			},
+			"schedules": {
+				"title": "Flexible Schedules",
+				"description": "Choose from hundreds of daily trips across Tunisia."
+			},
+			"safety": {
+				"title": "Safe & Reliable",
+				"description": "Travel with confidence on our verified and well-maintained fleet."
+			},
+			"rating": {
+				"title": "Rated Service",
+				"description": "Rate your trips and help us maintain the highest quality standards."
+			}
+		}
+	},
+	"routes": {
+		"title": "Popular Routes",
+		"subtitle": "Book your next trip today",
+		"duration": "Duration",
+		"from": "From",
+		"bookNow": "Book Now"
+	},
+	"howItWorks": {
+		"title": "How It Works",
+		"subtitle": "Get started in 3 simple steps",
+		"steps": {
+			"step1": {
+				"title": "Create Account",
+				"description": "Sign up in seconds with your email or phone number"
+			},
+			"step2": {
+				"title": "Find Your Route",
+				"description": "Search and compare schedules for your destination"
+			},
+			"step3": {
+				"title": "Book & Travel",
+				"description": "Pay securely and get instant confirmation with QR code"
+			}
+		}
+	},
+	"testimonials": {
+		"title": "What Our Customers Say",
+		"subtitle": "Join thousands of satisfied travelers",
+		"items": [
+			{
+				"name": "Amira Ben Salem",
+				"role": "Daily Commuter",
+				"content": "EZGO has made my daily commute so much easier. I can track my bus in real-time and never worry about missing it!",
+				"rating": 5
+			},
+			{
+				"name": "Mehdi Trabelsi",
+				"role": "Business Traveler",
+				"content": "The best bus booking platform in Tunisia. Professional service, comfortable buses, and always on time.",
+				"rating": 5
+			},
+			{
+				"name": "Salma Gharbi",
+				"role": "Student",
+				"content": "Affordable prices and easy booking. The mobile app is super user-friendly. Highly recommend!",
+				"rating": 5
+			}
+		]
+	},
+	"pricing": {
+		"title": "Simple, Transparent Pricing",
+		"subtitle": "No hidden fees, pay only for what you travel",
+		"perTrip": "Per Trip",
+		"features": {
+			"booking": "Easy online booking",
+			"tracking": "Real-time bus tracking",
+			"support": "24/7 customer support",
+			"refund": "Easy cancellation & refund",
+			"qr": "Digital QR code tickets",
+			"insurance": "Travel insurance included"
+		},
+		"note": "Prices vary by route and distance. Check specific routes for exact pricing."
+	},
+	"faq": {
+		"title": "Frequently Asked Questions",
+		"subtitle": "Everything you need to know",
+		"items": [
+			{
+				"question": "How do I book a ticket?",
+				"answer": "Simply create an account, search for your route, select your preferred time, and complete the payment. You'll receive a QR code ticket instantly."
+			},
+			{
+				"question": "Can I cancel or modify my booking?",
+				"answer": "Yes! You can cancel or modify your booking up to 2 hours before departure for a full refund. Changes made within 2 hours are subject to availability."
+			},
+			{
+				"question": "What payment methods do you accept?",
+				"answer": "We accept all major credit cards, debit cards, mobile wallets (D17, Flouci), and cash payments at partner locations."
+			},
+			{
+				"question": "Is my ticket transferable?",
+				"answer": "Tickets are non-transferable and can only be used by the person whose name is on the booking. Valid ID is required when boarding."
+			},
+			{
+				"question": "What if I miss my bus?",
+				"answer": "If you miss your bus, you can rebook for the next available trip. Additional fees may apply depending on ticket type and availability."
+			},
+			{
+				"question": "Do you offer student or group discounts?",
+				"answer": "Yes! We offer special discounts for students, seniors, and groups of 5 or more. Contact our support team for more details."
+			}
+		]
+	},
+	"partners": {
+		"title": "Trusted By Leading Companies",
+		"subtitle": "Join the network of satisfied partners and customers"
+	},
+	"cta": {
+		"title": "Ready to Start Your Journey?",
+		"subtitle": "Join thousands of travelers who trust EZGO for their daily commute",
+		"createAccount": "Create Free Account",
+		"downloadApp": "Download App"
+	},
+	"footer": {
+		"tagline": "Smart bus transportation for modern Tunisia.",
+		"company": {
+			"title": "Company",
+			"aboutUs": "About Us",
+			"careers": "Careers",
+			"press": "Press"
+		},
+		"support": {
+			"title": "Support",
+			"helpCenter": "Help Center",
+			"contactUs": "Contact Us",
+			"terms": "Terms of Service"
+		},
+		"connect": {
+			"title": "Connect",
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"instagram": "Instagram"
+		},
+		"copyright": "© 2025 EZGO. All rights reserved."
+	}
+}

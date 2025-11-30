@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/providers/theme-provider";
+import { LanguageProvider } from "@/lib/providers/language-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -79,13 +81,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<link rel="icon" href="/favicon.ico" />
 				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 				<link rel="manifest" href="/manifest.json" />
 			</head>
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className} suppressHydrationWarning>
+				<ThemeProvider>
+					<LanguageProvider>{children}</LanguageProvider>
+				</ThemeProvider>
+			</body>
 		</html>
 	);
 }

@@ -1,0 +1,185 @@
+{
+	"nav": {
+		"features": "Fonctionnalités",
+		"routes": "Itinéraires",
+		"download": "Télécharger",
+		"signIn": "Se connecter"
+	},
+	"hero": {
+		"title": "Voyagez intelligemment à travers",
+		"titleHighlight": "la Tunisie",
+		"subtitle": "Réservez des billets de bus en ligne, suivez votre bus en temps réel et profitez d'une expérience de voyage fluide.",
+		"getStarted": "Commencer gratuitement",
+		"learnMore": "En savoir plus",
+		"stats": {
+			"travelers": "Voyageurs satisfaits",
+			"routes": "Itinéraires",
+			"rating": "Note"
+		},
+		"features": {
+			"tracking": {
+				"title": "Suivi en temps réel",
+				"description": "Sachez exactement où se trouve votre bus"
+			},
+			"payments": {
+				"title": "Paiements sécurisés",
+				"description": "Plusieurs options de paiement"
+			}
+		}
+	},
+	"features": {
+		"title": "Pourquoi choisir EZGO ?",
+		"subtitle": "Tout ce dont vous avez besoin pour un voyage parfait",
+		"items": {
+			"booking": {
+				"title": "Réservation facile",
+				"description": "Réservez vos billets de bus en quelques secondes avec nos applications mobiles et web intuitives."
+			},
+			"tracking": {
+				"title": "Suivi en temps réel",
+				"description": "Suivez l'emplacement de votre bus en temps réel et ne manquez jamais votre trajet."
+			},
+			"payments": {
+				"title": "Paiements sécurisés",
+				"description": "Payez en toute sécurité avec plusieurs options de paiement, y compris cartes et portefeuilles mobiles."
+			},
+			"schedules": {
+				"title": "Horaires flexibles",
+				"description": "Choisissez parmi des centaines de trajets quotidiens à travers la Tunisie."
+			},
+			"safety": {
+				"title": "Sûr et fiable",
+				"description": "Voyagez en toute confiance sur notre flotte vérifiée et bien entretenue."
+			},
+			"rating": {
+				"title": "Service noté",
+				"description": "Évaluez vos trajets et aidez-nous à maintenir les normes de qualité les plus élevées."
+			}
+		}
+	},
+	"routes": {
+		"title": "Itinéraires Populaires",
+		"subtitle": "Réservez votre prochain voyage aujourd'hui",
+		"duration": "Durée",
+		"from": "À partir de",
+		"bookNow": "Réserver Maintenant"
+	},
+	"howItWorks": {
+		"title": "Comment Ça Marche",
+		"subtitle": "Commencez en 3 étapes simples",
+		"steps": {
+			"step1": {
+				"title": "Créer un Compte",
+				"description": "Inscrivez-vous en quelques secondes avec votre email ou numéro de téléphone"
+			},
+			"step2": {
+				"title": "Trouvez Votre Itinéraire",
+				"description": "Recherchez et comparez les horaires pour votre destination"
+			},
+			"step3": {
+				"title": "Réservez & Voyagez",
+				"description": "Payez en toute sécurité et obtenez une confirmation instantanée avec code QR"
+			}
+		}
+	},
+	"testimonials": {
+		"title": "Ce Que Disent Nos Clients",
+		"subtitle": "Rejoignez des milliers de voyageurs satisfaits",
+		"items": [
+			{
+				"name": "Amira Ben Salem",
+				"role": "Navetteur Quotidien",
+				"content": "EZGO a rendu mon trajet quotidien tellement plus facile. Je peux suivre mon bus en temps réel et ne jamais m'inquiéter de le manquer!",
+				"rating": 5
+			},
+			{
+				"name": "Mehdi Trabelsi",
+				"role": "Voyageur d'Affaires",
+				"content": "La meilleure plateforme de réservation de bus en Tunisie. Service professionnel, bus confortables et toujours à l'heure.",
+				"rating": 5
+			},
+			{
+				"name": "Salma Gharbi",
+				"role": "Étudiante",
+				"content": "Prix abordables et réservation facile. L'application mobile est super conviviale. Je recommande vivement!",
+				"rating": 5
+			}
+		]
+	},
+	"pricing": {
+		"title": "Tarification Simple et Transparente",
+		"subtitle": "Pas de frais cachés, payez uniquement pour ce que vous voyagez",
+		"perTrip": "Par Trajet",
+		"features": {
+			"booking": "Réservation en ligne facile",
+			"tracking": "Suivi du bus en temps réel",
+			"support": "Support client 24/7",
+			"refund": "Annulation et remboursement faciles",
+			"qr": "Billets numériques avec code QR",
+			"insurance": "Assurance voyage incluse"
+		},
+		"note": "Les prix varient selon l'itinéraire et la distance. Vérifiez les itinéraires spécifiques pour les tarifs exacts."
+	},
+	"faq": {
+		"title": "Questions Fréquemment Posées",
+		"subtitle": "Tout ce que vous devez savoir",
+		"items": [
+			{
+				"question": "Comment réserver un billet?",
+				"answer": "Créez simplement un compte, recherchez votre itinéraire, sélectionnez l'heure souhaitée et effectuez le paiement. Vous recevrez un billet avec code QR instantanément."
+			},
+			{
+				"question": "Puis-je annuler ou modifier ma réservation?",
+				"answer": "Oui! Vous pouvez annuler ou modifier votre réservation jusqu'à 2 heures avant le départ pour un remboursement complet. Les modifications dans les 2 heures sont soumises à disponibilité."
+			},
+			{
+				"question": "Quels modes de paiement acceptez-vous?",
+				"answer": "Nous acceptons toutes les principales cartes de crédit, cartes de débit, portefeuilles mobiles (D17, Flouci) et paiements en espèces dans les points de vente partenaires."
+			},
+			{
+				"question": "Mon billet est-il transférable?",
+				"answer": "Les billets ne sont pas transférables et ne peuvent être utilisés que par la personne dont le nom figure sur la réservation. Une pièce d'identité valide est requise à l'embarquement."
+			},
+			{
+				"question": "Que faire si je rate mon bus?",
+				"answer": "Si vous ratez votre bus, vous pouvez réserver pour le prochain voyage disponible. Des frais supplémentaires peuvent s'appliquer selon le type de billet et la disponibilité."
+			},
+			{
+				"question": "Proposez-vous des réductions étudiants ou groupes?",
+				"answer": "Oui! Nous offrons des réductions spéciales pour les étudiants, les seniors et les groupes de 5 personnes ou plus. Contactez notre équipe d'assistance pour plus de détails."
+			}
+		]
+	},
+	"partners": {
+		"title": "Approuvé Par Les Grandes Entreprises",
+		"subtitle": "Rejoignez le réseau de partenaires et clients satisfaits"
+	},
+	"cta": {
+		"title": "Prêt à commencer votre voyage ?",
+		"subtitle": "Rejoignez des milliers de voyageurs qui font confiance à EZGO pour leurs déplacements quotidiens",
+		"createAccount": "Créer un compte gratuit",
+		"downloadApp": "Télécharger l'application"
+	},
+	"footer": {
+		"tagline": "Transport de bus intelligent pour la Tunisie moderne.",
+		"company": {
+			"title": "Entreprise",
+			"aboutUs": "À propos",
+			"careers": "Carrières",
+			"press": "Presse"
+		},
+		"support": {
+			"title": "Support",
+			"helpCenter": "Centre d'aide",
+			"contactUs": "Nous contacter",
+			"terms": "Conditions d'utilisation"
+		},
+		"connect": {
+			"title": "Connecter",
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"instagram": "Instagram"
+		},
+		"copyright": "© 2025 EZGO. Tous droits réservés."
+	}
+}

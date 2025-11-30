@@ -1,8 +1,8 @@
 "use client";
 
 import { Languages } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/providers/language-provider";
-import { useState, useRef, useEffect } from "react";
 
 export function LanguageToggle() {
 	const { language, setLanguage } = useLanguage();

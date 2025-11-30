@@ -2,14 +2,14 @@
 
 import {
 	createContext,
+	type ReactNode,
 	useContext,
 	useEffect,
 	useState,
-	type ReactNode,
 } from "react";
+import ar from "@/locales/ar.json";
 import en from "@/locales/en.json";
 import fr from "@/locales/fr.json";
-import ar from "@/locales/ar.json";
 
 type Language = "en" | "fr" | "ar";
 type Translations = typeof en;

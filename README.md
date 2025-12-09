@@ -2,29 +2,29 @@
 
 EZGO is a dual-platform mobile and web solution designed to modernize Tunisia's public transportation system. It delivers real-time navigation, smart reservations, and data-driven operational tools that improve reliability for riders and profitability for transport operators.
 
-## 🚀 Features
+## Features
 
 ### For Passengers & Tourists
-- 📱 Seamless mobile app with live bus tracking
-- ⏱️ Accurate ETAs and route visualization
-- 💺 Seat availability and reservations
-- 🎫 Digital tickets and booking history
-- 👤 Driver information and ratings
+- Seamless mobile app with live bus tracking
+- Accurate ETAs and route visualization
+- Seat availability and reservations
+- Digital tickets and booking history
+- Driver information and ratings
 
 ### For Bus Companies
-- 🚌 Complete fleet management system
-- 👨‍✈️ Driver assignment and scheduling
-- 📊 Real-time operations monitoring
-- 💰 Profitability dashboard and analytics
-- 📈 Performance insights and optimization
+- Complete fleet management system
+- Driver assignment and scheduling
+- Real-time operations monitoring
+- Profitability dashboard and analytics
+- Performance insights and optimization
 
 ### For Administrators
-- 🔐 Centralized user and company management
-- 📋 System-wide analytics and reporting
-- ⚙️ Permissions and roles management
-- 🎯 Quality assurance and compliance tools
+- Centralized user and company management
+- System-wide analytics and reporting
+- Permissions and roles management
+- Quality assurance and compliance tools
 
-## 🏗️ Architecture
+## Architecture
 
 This project is a **Turborepo monorepo** containing three applications:
 
@@ -65,7 +65,7 @@ ezgo/
 - **Linting/Formatting**: Biome.js
 - **Package Manager**: npm
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 - Node.js 18+ and npm
@@ -105,7 +105,7 @@ ezgo/
    cd ../..
    ```
 
-## 🚀 Running the Applications
+## Running the Applications
 
 ### Development Mode
 
@@ -143,7 +143,7 @@ npm start
 npm run build
 ```
 
-## 📸 Screenshots
+## Screenshots
 
 ### Web Dashboard
 
@@ -168,7 +168,7 @@ The mobile app features:
 - **Passenger Mode**: Real-time bus tracking, seat booking, and trip history
 - **Driver Mode**: Assigned routes, passenger counts, and navigation assistance
 
-## 🗄️ Database Schema
+## Database Schema
 
 The application uses the following main entities:
 
@@ -179,7 +179,31 @@ The application uses the following main entities:
 - **Trip**: Scheduled trips with real-time status
 - **Booking**: Passenger reservations and tickets
 
-## 🔧 Development
+## AI Features
+
+### Fatigue Detection
+
+The `fatigue-detection.ipynb` notebook implements driver fatigue detection using computer vision. This notebook must be run in the Kaggle environment.
+
+**Dataset**: [Drowsiness Dataset](https://www.kaggle.com/datasets/dheerajperumandla/drowsiness-dataset)
+
+**Setup Instructions**:
+1. Upload the notebook to Kaggle
+2. Add the dataset using the URL above
+3. Run the notebook in Kaggle's environment
+
+### Suspicious Behaviour Detection
+
+The `suspicious_behaviour_detection.ipynb` notebook implements suspicious activity detection for passenger safety monitoring. This notebook is trained on a custom dataset and should be run on Kaggle.
+
+**Dataset**: [Suspicious Activity Detection](https://universe.roboflow.com/suspicious-activity-detection/suspicious-activity-detection-gphrb/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true)
+
+**Setup Instructions**:
+1. Upload the notebook to Kaggle
+2. Set up the dataset from Roboflow
+3. Run the notebook in Kaggle's environment
+
+## Development
 
 ### Code Quality
 
@@ -201,7 +225,7 @@ Recommended extensions are configured in `.vscode/extensions.json`:
 - Tailwind CSS IntelliSense
 - Expo Tools
 
-## 📝 API Endpoints
+## API Endpoints
 
 ### Companies
 - `GET /company` - List all companies
@@ -212,7 +236,7 @@ Recommended extensions are configured in `.vscode/extensions.json`:
 
 *Additional endpoints for Users, Buses, Routes, Trips, and Bookings will be added.*
 
-## 🚧 Roadmap
+## Roadmap
 
 - [ ] Complete API endpoints for all entities
 - [ ] Implement authentication and authorization
@@ -223,20 +247,5 @@ Recommended extensions are configured in `.vscode/extensions.json`:
 - [ ] Add map integration (Google Maps/Mapbox)
 - [ ] Create mobile app screens for all features
 - [ ] Add unit and integration tests
+- [ ] Integrate IoT with AI
 - [ ] Deploy to production
-
-## 📄 License
-
-[Your License Here]
-
-## 👥 Contributors
-
-[Your Team/Contributors]
-
-## 🤝 Contributing
-
-Contributions are welcome! Please read our contributing guidelines before submitting PRs.
-
----
-
-**Built with ❤️ for Tunisia's Smart Mobility Future**

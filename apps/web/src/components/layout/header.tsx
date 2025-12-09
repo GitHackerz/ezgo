@@ -1,14 +1,15 @@
 "use client";
 
 import {
-	Bell,
-	Command,
-	LogOut,
-	Moon,
-	Search,
-	Settings,
-	Sun,
-	User,
+    Bell,
+    Command,
+    LogOut,
+    Menu,
+    Moon,
+    Search,
+    Settings,
+    Sun,
+    User,
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
@@ -16,15 +17,19 @@ import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Header() {
+interface HeaderProps {
+	onToggleSidebar?: () => void;
+}
+
+export function Header({ onToggleSidebar }: Readonly<HeaderProps>) {
 	const { data: session } = useSession();
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
@@ -67,8 +72,16 @@ export function Header() {
 
 	return (
 		<header className="sticky top-0 z-40 h-16 flex items-center px-6 justify-between backdrop-blur-xl border-b border-border/50 bg-background">
-			{/* Left Section - Search */}
-			<div className="flex items-center gap-4 flex-1">
+		{/* Left Section - Search */}
+		<div className="flex items-center gap-4 flex-1">
+			{/* Sidebar toggle - visible on all sizes but styled for small screens */}
+			<button
+				aria-label="Toggle sidebar"
+				onClick={() => onToggleSidebar?.()}
+				className="mr-2 inline-flex h-9 w-9 items-center justify-center rounded-xl hover:bg-muted"
+			>
+				<Menu className="h-4 w-4" />
+			</button>
 				<div className="relative max-w-md w-full">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 						<Search className="h-4 w-4 text-muted-foreground" />

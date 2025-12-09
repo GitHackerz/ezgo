@@ -1,10 +1,10 @@
 import {
-	MapContainer,
-	Marker,
-	Polyline,
-	Popup,
-	TileLayer,
-	useMap,
+    MapContainer,
+    Marker,
+    Polyline,
+    Popup,
+    TileLayer,
+    useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
@@ -109,13 +109,14 @@ export default function MapContent({
 
 	return (
 		<div
-			className="rounded-lg border overflow-hidden"
-			style={{ height: "600px" }}
+			className="rounded-lg border overflow-hidden relative"
+			style={{ height: "600px", zIndex: 1 }}
 		>
 			<MapContainer
 				center={center}
 				zoom={10}
-				style={{ height: "100%", width: "100%" }}
+				style={{ height: "100%", width: "100%", zIndex: 1 }}
+				zoomControl={true}
 			>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

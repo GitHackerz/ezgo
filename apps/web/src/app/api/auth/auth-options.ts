@@ -14,6 +14,11 @@ function decodeJWT(token: string) {
 }
 
 export const authOptions: NextAuthOptions = {
+	pages: {
+		signIn: '/auth/login',
+		// After login, redirect to dashboard
+		// You can also set error, signOut, etc. here
+	},
 	providers: [
 		CredentialsProvider({
 			id: "credentials",
@@ -57,6 +62,10 @@ export const authOptions: NextAuthOptions = {
 		}),
 	],
 	callbacks: {
+		async redirect({ url, baseUrl }) {
+			// Always redirect to / after login
+			return '/';
+		},
 		async jwt({ token, user }: any) {
 			if (user) {
 				token.id = user.id;

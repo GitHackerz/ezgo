@@ -1,19 +1,19 @@
 "use client";
 
 import {
-	BarChart3,
-	Bell,
-	Building2,
-	Bus,
-	Calendar,
-	ChevronRight,
-	CreditCard,
-	LayoutDashboard,
-	Map as MapIcon,
-	Route,
-	Settings,
-	Ticket,
-	Users,
+    BarChart3,
+    Bell,
+    Building2,
+    Bus,
+    Calendar,
+    ChevronRight,
+    CreditCard,
+    LayoutDashboard,
+    Map as MapIcon,
+    Route,
+    Settings,
+    Ticket,
+    Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,10 +32,12 @@ type NavItem = {
 const navigation: NavItem[] = [
 	{ name: "Dashboard", href: "/", icon: LayoutDashboard },
 	{ name: "Live Map", href: "/map", icon: MapIcon, badge: "Live" },
-	{ name: "Fleet", href: "/fleet", icon: Bus },
-	{ name: "Routes", href: "/routes", icon: Route },
-	{ name: "Trips", href: "/trips", icon: Calendar },
-	{ name: "Bookings", href: "/bookings", icon: Ticket },
+	{ name: "Fleet", href: "/fleet", icon: Bus, roles: ["ADMIN", "COMPANY_ADMIN", "DRIVER"] },
+	{ name: "Routes", href: "/routes", icon: Route, roles: ["ADMIN", "COMPANY_ADMIN", "DRIVER"] },
+	{ name: "Trips", href: "/trips", icon: Calendar, roles: ["ADMIN", "COMPANY_ADMIN", "DRIVER"] },
+	{ name: "Bookings", href: "/bookings", icon: Ticket, roles: ["ADMIN", "COMPANY_ADMIN", "DRIVER"] },
+	{ name: "Book Trip", href: "/book-trip", icon: Bus, roles: ["PASSENGER"] },
+	{ name: "Booking History", href: "/booking-history", icon: Ticket, roles: ["PASSENGER"] },
 	{
 		name: "Payments",
 		href: "/payments",
@@ -64,7 +66,12 @@ const navigation: NavItem[] = [
 	{ name: "Settings", href: "/settings", icon: Settings },
 ];
 
-export function Sidebar() {
+type SidebarProps = {
+	isOpen?: boolean;
+	onClose?: () => void;
+};
+
+export function Sidebar({ isOpen = true, onClose }: Readonly<SidebarProps>) {
 	const pathname = usePathname();
 	const { data: session } = useSession();
 	const userRole = session?.user?.role || "PASSENGER";
@@ -75,7 +82,25 @@ export function Sidebar() {
 	});
 
 	return (
-		<div className="fixed left-0 top-0 flex w-72 flex-col bg-sidebar border-r border-sidebar-border h-screen z-30">
+		<>
+			{/* Overlay for small screens when sidebar is open */}
+			<button
+				type="button"
+				className={cn(
+					"fixed inset-0 bg-black/30 z-20 transition-opacity lg:hidden border-0 p-0 m-0",
+					isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+				)}
+				onClick={() => onClose?.()}
+				aria-hidden={!isOpen}
+				aria-label="Close sidebar overlay"
+			/>
+
+			<div
+				className={cn(
+					"fixed left-0 top-0 flex w-72 flex-col bg-sidebar border-r border-sidebar-border h-screen z-30 transform transition-transform duration-200 ease-in-out",
+					isOpen ? "translate-x-0" : "-translate-x-72",
+				)}
+			>
 			{/* Logo Section */}
 			<div className="flex h-20 items-center justify-center px-6">
 				<Link href="/">
@@ -173,5 +198,6 @@ export function Sidebar() {
 				)}
 			</div>
 		</div>
+		</>
 	);
 }
